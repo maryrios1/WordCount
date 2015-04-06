@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+
 
 /**
  *
@@ -51,13 +51,15 @@ public class WordCount {
     }
     
     public static void main (String args[]) throws Exception{
+        
         Configuration conf =  new Configuration();
-        Job job =  new Job(conf,"wordcount");
+        Job job = new Job(conf,"wordcount");
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         
         job.setMapperClass(Map.class);
         job.setReducerClass(Reduce.class);
+        
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);
         
