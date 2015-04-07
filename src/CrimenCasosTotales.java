@@ -40,12 +40,12 @@ public class CrimenCasosTotales {
      * ¡V4500, Theft ¡V3800, Assault -2596
      */
       
-    public static class Map extends Mapper{
+    public static class Map extends Mapper<Text, IntWritable, Text, IntWritable>{
         private final static IntWritable one = new IntWritable(1);
         private final static IntWritable cero = new IntWritable(0);
         private Text word = new Text();
         
-        public void map (LongWritable key,Text value,Reducer.Context context)
+        public void map (Text key,IntWritable value,Reducer.Context context)
                 throws IOException, InterruptedException{
             
             String array[] = value.toString().split(",");
@@ -82,11 +82,13 @@ public class CrimenCasosTotales {
     public static void main (String args[]) throws Exception{
         
         Configuration conf =  new Configuration();
-        Job job = new Job(conf,"casostotales");
+        Job job = Job.getInstance(conf,"casostotales");
+        job.setJarByClass(WordCount.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         
         job.setMapperClass(Map.class);
+        job.setCombinerClass(Reduce.class);
         job.setReducerClass(Reduce.class);
         
         job.setInputFormatClass(TextInputFormat.class);
@@ -95,6 +97,6 @@ public class CrimenCasosTotales {
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         
-        job.waitForCompletion(true);
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }

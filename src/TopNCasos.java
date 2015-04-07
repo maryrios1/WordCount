@@ -67,7 +67,7 @@ public class TopNCasos {
             }
         }
     }
-    
+    /*
     public static void main (String args[]) throws Exception{
         
         Configuration conf =  new Configuration();
@@ -87,5 +87,5 @@ public class TopNCasos {
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         
         job.waitForCompletion(true);
-    }
+    }*/
 }
